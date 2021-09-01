@@ -17,7 +17,7 @@ namespace Labaton.Controllers
         [HttpGet("getStructure")]
         public ActionResult GetStructure()
         {
-            _directoryService.GetDirectoriesStructure();
+            _directoryService.GetDirectoriesStructure(); 
             return Ok();
         }
         //One POST method for getting json and applying it  
