@@ -15,22 +15,25 @@ namespace Labaton.Services
             foreach (var dr in drives)
             {
                 var di = new System.IO.DriveInfo(dr);
-
-                // Here we skip the drive if it is not ready to be read. This
-                // is not necessarily the appropriate action in all scenarios.
+                folders.Add(new FolderItem() {Parent = null, Name = di.Name});
                 if (!di.IsReady)
                 {
                     Console.WriteLine("The drive {0} could not be read", di.Name);
                     continue;
                 }
-                WalkDirectoryTree(di.RootDirectory);
+
+                WalkDirectoryTree(di.RootDirectory, 1);
             }
 
             return folders;
         }
 
-        private void WalkDirectoryTree(System.IO.DirectoryInfo root)
+        private void WalkDirectoryTree(System.IO.DirectoryInfo root, int depth)
         {
+            /*if (depth > 4)
+            {
+                return;
+            }*/
             System.IO.FileInfo[] files = null;
             Console.WriteLine(root);
             try
@@ -51,7 +54,7 @@ namespace Labaton.Services
             {
                 foreach (var dirInfo in root.GetDirectories())
                 {
-                    WalkDirectoryTree(dirInfo);
+                    WalkDirectoryTree(dirInfo, ++depth);
                 }
             }
         }

@@ -16,10 +16,11 @@ namespace Labaton.Controllers
         //One GET method for sending all folders
         [HttpGet("getStructure")]
         public ActionResult GetStructure()
-        {
-            _directoryService.GetDirectoriesStructure(); 
-            return Ok();
+        { 
+            return Ok(_directoryService.GetDirectoriesStructure());
         }
+        
+        
         //One POST method for getting json and applying it  
     }
 }
