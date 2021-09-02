@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Labaton.DTOs;
 using Labaton.Interfaces;
 using Labaton.Models;
 
@@ -7,35 +10,37 @@ namespace Labaton.Services
 {
     public class DirectoryService : IDirectory
     {
-        public IEnumerable<FolderItem> GetDirectoriesStructure()
+        public IEnumerable<FolderItem> GetDirectoriesStructure(GetStructureDto getStructureDto)
         {
             var folders = new List<FolderItem>();
-            var drives = Environment.GetLogicalDrives();
 
-            foreach (var dr in drives)
+            if (string.IsNullOrEmpty(getStructureDto.Path))
             {
-                var di = new System.IO.DriveInfo(dr);
-                folders.Add(new FolderItem() {Parent = null, Name = di.Name});
-                if (!di.IsReady)
-                {
-                    Console.WriteLine("The drive {0} could not be read", di.Name);
-                    continue;
-                }
-
-                WalkDirectoryTree(di.RootDirectory, 1);
+                var drives = Environment.GetLogicalDrives();
+                folders.AddRange(drives.Select(dr => new DriveInfo(dr))
+                    .Select(di => new FolderItem() {Parent = null, Path = di.Name}));
             }
-
+            else
+            {
+                var folder = new FolderItem() {Parent = "D:\\RIDER\\", Path = getStructureDto.Path};
+                WalkDirectoryTree(folder);
+                folders.Add(folder);
+            }
+            
             return folders;
         }
 
-        private void WalkDirectoryTree(System.IO.DirectoryInfo root, int depth)
+        private void WalkDirectoryTree(FolderItem folderItem, int depth = 0)
         {
-            /*if (depth > 4)
+            if (depth > 0)
             {
                 return;
-            }*/
-            System.IO.FileInfo[] files = null;
-            Console.WriteLine(root);
+            }
+
+            var root = new DirectoryInfo(folderItem.Path);
+            FileInfo[] files = null;
+            Console.WriteLine(folderItem.Path);
+            
             try
             {
                 files = root.GetFiles("*.*");
@@ -45,16 +50,20 @@ namespace Labaton.Services
                 Console.WriteLine(e.Message);
             }
 
-            catch (System.IO.DirectoryNotFoundException e)
+            catch (DirectoryNotFoundException e)
             {
                 Console.WriteLine(e.Message);
             }
 
             if (files != null)
             {
+                folderItem.Children = new List<FolderItem>();
                 foreach (var dirInfo in root.GetDirectories())
                 {
-                    WalkDirectoryTree(dirInfo, ++depth);
+                    var name = dirInfo.FullName;
+                    var subDir = new FolderItem() {Path = dirInfo.FullName, Parent = folderItem.Path};
+                    WalkDirectoryTree(subDir, ++depth);
+                    folderItem.Children.Add(subDir);
                 }
             }
         }

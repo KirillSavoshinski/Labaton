@@ -1,9 +1,11 @@
-﻿using Labaton.Interfaces;
+﻿using Labaton.DTOs;
+using Labaton.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Labaton.Controllers
 {
     [ApiController]
+    [Route("directories")]
     public class DirectoriesController : ControllerBase
     {
         private readonly IDirectory _directoryService;
@@ -13,11 +15,11 @@ namespace Labaton.Controllers
             _directoryService = directoryService;
         }
         
-        //One GET method for sending all folders
+
         [HttpGet("getStructure")]
-        public ActionResult GetStructure()
+        public ActionResult GetStructure(GetStructureDto getStructureDto)
         { 
-            return Ok(_directoryService.GetDirectoriesStructure());
+            return Ok(_directoryService.GetDirectoriesStructure(getStructureDto));
         }
         
         

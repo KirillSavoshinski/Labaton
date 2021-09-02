@@ -30,6 +30,10 @@ namespace Labaton
         {
             services.AddScoped<IDirectory, DirectoryService>();
             services.AddControllers();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Labaton", Version = "v1"}); });
         }
 
