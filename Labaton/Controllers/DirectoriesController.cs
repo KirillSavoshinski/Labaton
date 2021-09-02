@@ -22,7 +22,5 @@ namespace Labaton.Controllers
             return Ok(_directoryService.GetDirectoriesStructure(getStructureDto));
         }
         
-        
-        //One POST method for getting json and applying it  
     }
 }
