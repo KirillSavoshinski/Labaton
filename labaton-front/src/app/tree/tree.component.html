@@ -1,1 +1,4 @@
-<p>tree works!</p>
+<accordion [isAnimated]="true">
+    <accordion-group *ngFor="let item of treeItems" [heading]="item.path">
+    </accordion-group>
+</accordion>
