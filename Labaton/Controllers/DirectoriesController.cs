@@ -1,5 +1,4 @@
-﻿using Labaton.DTOs;
-using Labaton.Interfaces;
+﻿using Labaton.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Labaton.Controllers
@@ -17,9 +16,9 @@ namespace Labaton.Controllers
         
 
         [HttpGet("getStructure")]
-        public ActionResult GetStructure(GetStructureDto getStructureDto)
+        public ActionResult GetStructure([FromQuery]string path)
         { 
-            return Ok(_directoryService.GetDirectoriesStructure(getStructureDto));
+            return Ok(_directoryService.GetDirectoriesStructure(path));
         }
         
     }

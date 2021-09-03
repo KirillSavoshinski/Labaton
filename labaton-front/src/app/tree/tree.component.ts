@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StructureService } from '../services/structure.service';
 
 @Component({
   selector: 'app-tree',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TreeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private structureService: StructureService) { }
 
   ngOnInit(): void {
+    this.structureService.getStructure("D://").subscribe(response => {
+      console.log(response);
+    })
   }
 
 }

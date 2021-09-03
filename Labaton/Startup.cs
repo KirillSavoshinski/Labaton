@@ -29,6 +29,7 @@ namespace Labaton
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IDirectory, DirectoryService>();
+            services.AddCors();
             services.AddControllers();
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
@@ -46,7 +47,12 @@ namespace Labaton
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Labaton v1"));
             }
-
+            
+            app.UseCors(builder => builder.AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .WithOrigins("http://localhost:4200"));
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();

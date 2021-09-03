@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Labaton.DTOs;
 using Labaton.Interfaces;
 using Labaton.Models;
 
@@ -10,11 +9,11 @@ namespace Labaton.Services
 {
     public class DirectoryService : IDirectory
     {
-        public IEnumerable<FolderItem> GetDirectoriesStructure(GetStructureDto getStructureDto)
+        public IEnumerable<FolderItem> GetDirectoriesStructure(string path)
         {
             var folders = new List<FolderItem>();
 
-            if (string.IsNullOrEmpty(getStructureDto.Path))
+            if (string.IsNullOrEmpty(path))
             {
                 var drives = Environment.GetLogicalDrives();
                 folders.AddRange(drives.Select(dr => new DriveInfo(dr))
@@ -22,7 +21,7 @@ namespace Labaton.Services
             }
             else
             {
-                var folder = new FolderItem() {Parent = "D:\\RIDER\\", Path = getStructureDto.Path};
+                var folder = new FolderItem() {Parent = "D:\\RIDER\\", Path = path};
                 WalkDirectoryTree(folder);
                 folders.Add(folder);
             }
@@ -60,7 +59,6 @@ namespace Labaton.Services
                 folderItem.Children = new List<FolderItem>();
                 foreach (var dirInfo in root.GetDirectories())
                 {
-                    var name = dirInfo.FullName;
                     var subDir = new FolderItem() {Path = dirInfo.FullName, Parent = folderItem.Path};
                     WalkDirectoryTree(subDir, ++depth);
                     folderItem.Children.Add(subDir);
