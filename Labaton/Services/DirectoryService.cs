@@ -9,24 +9,33 @@ namespace Labaton.Services
 {
     public class DirectoryService : IDirectory
     {
-        public IEnumerable<FolderItem> GetDirectoriesStructure(string path)
+        public FolderItem GetDirectoriesStructure(string path)
         {
-            var folders = new List<FolderItem>();
+            var folder = new FolderItem();
 
             if (string.IsNullOrEmpty(path))
             {
-                var drives = Environment.GetLogicalDrives();
-                folders.AddRange(drives.Select(dr => new DriveInfo(dr))
-                    .Select(di => new FolderItem() {Parent = null, Path = di.Name}));
+                folder.Parent = "root";
+                folder.Children = new List<FolderItem>();
+
+                foreach (var drive in Environment.GetLogicalDrives())
+                {
+                    folder.Children.Add(new FolderItem() {Parent = folder.Parent, Path = drive});
+                }
+
+                foreach (var child in folder.Children)
+                {
+                    WalkDirectoryTree(child);
+                }
+                
             }
             else
             {
-                var folder = new FolderItem() {Parent = "D:\\RIDER\\", Path = path};
+                folder.Parent = path;
                 WalkDirectoryTree(folder);
-                folders.Add(folder);
             }
-            
-            return folders;
+
+            return folder;
         }
 
         private void WalkDirectoryTree(FolderItem folderItem, int depth = 0)
@@ -38,8 +47,7 @@ namespace Labaton.Services
 
             var root = new DirectoryInfo(folderItem.Path);
             FileInfo[] files = null;
-            Console.WriteLine(folderItem.Path);
-            
+
             try
             {
                 files = root.GetFiles("*.*");
@@ -57,10 +65,11 @@ namespace Labaton.Services
             if (files != null)
             {
                 folderItem.Children = new List<FolderItem>();
+                ++depth;
                 foreach (var dirInfo in root.GetDirectories())
                 {
                     var subDir = new FolderItem() {Path = dirInfo.FullName, Parent = folderItem.Path};
-                    WalkDirectoryTree(subDir, ++depth);
+                    WalkDirectoryTree(subDir, depth);
                     folderItem.Children.Add(subDir);
                 }
             }

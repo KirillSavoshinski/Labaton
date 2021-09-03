@@ -5,6 +5,6 @@ namespace Labaton.Interfaces
 {
     public interface IDirectory
     {
-        IEnumerable<FolderItem> GetDirectoriesStructure(string path);
+        FolderItem GetDirectoriesStructure(string path);
     }
 }

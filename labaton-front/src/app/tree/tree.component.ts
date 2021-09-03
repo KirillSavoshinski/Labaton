@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TreeItem } from '../models/tree-item';
 import { StructureService } from '../services/structure.service';
 
@@ -8,14 +8,22 @@ import { StructureService } from '../services/structure.service';
   styleUrls: ['./tree.component.scss']
 })
 export class TreeComponent implements OnInit {
-  public treeItems: TreeItem;
-
+  @Input() treeItem: TreeItem;
+  public flag: boolean = false;
   constructor(private structureService: StructureService) { }
 
   ngOnInit(): void {
-    this.structureService.getStructure("").subscribe(response => {
-      this.treeItems = response;
-    })
+    // if (!this.treeItem) {
+    //   this.structureService.getStructure("").subscribe(response => {
+    //     this.treeItem = response;
+    //   });
+    // }
+
   }
 
+  // public click(path: string): void {
+  //   this.structureService.getStructure(path).subscribe(response => {
+  //     console.log(response);
+  //   });
+  // }
 }
