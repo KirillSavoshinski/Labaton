@@ -1,10 +1,16 @@
-<div *ngIf="treeItem">
+<accordion *ngIf="treeItem" [isAnimated]="true">
+    <accordion-group *ngFor="let child of treeItem.children" heading="{{child.path}}">
+        <div class="w-100" *ngIf="child.children" (click)="click(child.path)">
+            <app-tree [treeItem]="child"></app-tree>
+        </div>
+    </accordion-group>
+</accordion>
+
+<!-- <div *ngIf="treeItem">
     <div id="collapseBasic" *ngFor="let child of treeItem.children" [collapse]="false" [isAnimated]="true">
         <div class="well well-lg card card-block card-header">{{child.path}}</div>
         <ng-container *ngIf="child.children">
-            <app-tree *ngFor="let chill of child.children">{{chill.path}}</app-tree>
+            <app-tree [treeItem]="child"></app-tree>
         </ng-container>
     </div>
-</div>
-
-
+</div> -->

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Labaton.Interfaces;
 using Labaton.Models;
 
@@ -40,7 +39,7 @@ namespace Labaton.Services
 
         private void WalkDirectoryTree(FolderItem folderItem, int depth = 0)
         {
-            if (depth > 0)
+            if (depth > 1)
             {
                 return;
             }
