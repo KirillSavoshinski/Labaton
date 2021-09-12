@@ -14,13 +14,6 @@ export class TreeComponent implements OnInit {
   constructor(private structureService: StructureService) { }
 
   ngOnInit(): void {
-    // if (!this.treeItem) {
-    //   this.structureService.getStructure("").subscribe(response => {
-    //     this.treeItem = response;
-    //   });
-    // }
-    console.log(this.treeItem);
-
   }
 
   public click(path: string): void {
