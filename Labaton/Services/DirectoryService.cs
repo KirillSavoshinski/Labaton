@@ -30,7 +30,7 @@ namespace Labaton.Services
             }
             else
             {
-                folder.Parent = path;
+                folder.Path = path;
                 WalkDirectoryTree(folder);
             }
 
@@ -39,7 +39,7 @@ namespace Labaton.Services
 
         private void WalkDirectoryTree(FolderItem folderItem, int depth = 0)
         {
-            if (depth > 1)
+            if (depth > 0)
             {
                 return;
             }

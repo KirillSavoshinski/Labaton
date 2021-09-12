@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TreeItem } from '../models/tree-item';
 import { StructureService } from '../services/structure.service';
 
@@ -9,7 +9,6 @@ import { StructureService } from '../services/structure.service';
 })
 export class TreeComponent implements OnInit {
   @Input() treeItem: TreeItem;
-  @Output() expandedTreeItem = new EventEmitter<TreeItem>();
   
   constructor(private structureService: StructureService) { }
 
@@ -17,9 +16,8 @@ export class TreeComponent implements OnInit {
   }
 
   public click(path: string): void {
-    console.log(path);
-    // this.structureService.getStructure(path).subscribe(response => {
-    //   console.log(response);
-    // });
+    this.structureService.getStructure(path).subscribe(response => {
+      this.treeItem.children.find(el => el.path === path).children = response.children;
+    });
   }
 }
