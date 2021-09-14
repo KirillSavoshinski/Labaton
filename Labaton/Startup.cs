@@ -29,6 +29,7 @@ namespace Labaton
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IDirectory, DirectoryService>();
+            services.AddScoped<IApplyJsonService, ApplyJsonService>();
             services.AddCors();
             services.AddControllers();
             services.AddControllersWithViews()

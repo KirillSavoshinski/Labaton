@@ -1,25 +1,34 @@
-﻿using Labaton.Interfaces;
+﻿using System.Text.Json;
+using Labaton.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace Labaton.Controllers
 {
     [ApiController]
-    [Route("directories")]
+    [Route("api/directories")]
     public class DirectoriesController : ControllerBase
     {
         private readonly IDirectory _directoryService;
-        
-        public DirectoriesController(IDirectory directoryService)
+        private readonly IApplyJsonService _applyJsonService;
+
+        public DirectoriesController(IApplyJsonService applyJsonService, IDirectory directoryService)
         {
             _directoryService = directoryService;
+            _applyJsonService = applyJsonService;
         }
-        
 
         [HttpGet("getStructure")]
-        public ActionResult GetStructure([FromQuery]string path)
-        { 
+        public ActionResult GetStructure([FromQuery] string path)
+        {
             return Ok(_directoryService.GetDirectoriesStructure(path));
         }
-        
+
+        [HttpPost]
+        public ActionResult CreteStructure([FromQuery] string selectedFolderPath, JObject structure)
+        {
+            _applyJsonService.ApplyJson(selectedFolderPath, structure);
+            return Ok();
+        }
     }
 }
