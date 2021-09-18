@@ -13,6 +13,6 @@ export class StructureService {
   constructor(private http: HttpClient) { }
 
   public getStructure(path: string): Observable<TreeItem> {
-    return this.http.get<TreeItem>(this.baseUrl + 'directories/getStructure/', { params: new HttpParams().set('path', path) });
+    return this.http.get<TreeItem>(this.baseUrl + 'api/directories', { params: new HttpParams().set('path', path) });
   }
 }

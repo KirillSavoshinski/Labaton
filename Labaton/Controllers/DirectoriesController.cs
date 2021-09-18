@@ -18,14 +18,14 @@ namespace Labaton.Controllers
             _applyJsonService = applyJsonService;
         }
 
-        [HttpGet("getStructure")]
+        [HttpGet]
         public ActionResult GetStructure([FromQuery] string path)
         {
             return Ok(_directoryService.GetDirectoriesStructure(path));
         }
 
         [HttpPost]
-        public ActionResult CreteStructure([FromQuery] string selectedFolderPath, JObject structure)
+        public ActionResult CreateStructure([FromQuery] string selectedFolderPath, JObject structure)
         {
             _applyJsonService.ApplyJson(selectedFolderPath, structure);
             return Ok();

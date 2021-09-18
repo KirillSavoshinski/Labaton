@@ -1,0 +1,12 @@
+.panel {
+    border-radius: 10px;
+    border-color: black;
+    border-style: dashed;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+
+    &__title {
+        align-self: center;
+    }
+}
