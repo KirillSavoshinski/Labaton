@@ -1,5 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using System.Linq;
 using Labaton.Interfaces;
 using Newtonsoft.Json.Linq;
 
@@ -9,12 +9,28 @@ namespace Labaton.Services
     {
         public void ApplyJson(string selectedFolderPath, JObject structure)
         {
-            var root = new DirectoryInfo(selectedFolderPath); 
-            
-            foreach (var el in structure)
+            WalkJsonStructure(selectedFolderPath, structure);
+        }
+
+        private void WalkJsonStructure(string currentFolder, JToken children)
+        {
+            var folders = children.Children()
+                .Select(_ => currentFolder).ToList();
+
+            var i = 0;
+            foreach (var child in children.Children())
             {
-                Console.WriteLine($"key: {el.Key}");
-                Console.WriteLine($"value: {el.Value}");
+                if (child is JProperty property)
+                {
+                    currentFolder = folders[i] + property.Name + "/";
+                    if (!Directory.Exists(currentFolder))
+                    {
+                        Directory.CreateDirectory(currentFolder);
+                    }
+                }
+
+                WalkJsonStructure(currentFolder, child);
+                i++;
             }
         }
     }
