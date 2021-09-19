@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import {
+  NgxFileDropEntry,
+  FileSystemFileEntry,
+  FileSystemDirectoryEntry,
+} from 'ngx-file-drop';
+import { StructureService } from '../services/structure.service';
 
 @Component({
   selector: 'app-panel',
@@ -7,52 +12,28 @@ import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 
   styleUrls: ['./panel.component.scss'],
 })
 export class PanelComponent implements OnInit {
-  constructor() {}
+  public file: File;
+  public selectedFolder: string = null;
 
-  ngOnInit(): void {}
+  constructor(private structureService: StructureService) {}
 
-  public files: NgxFileDropEntry[] = [];
+  ngOnInit(): void {
+    this.structureService.selectedFolder.subscribe(val => this.selectedFolder = val);
+  }
 
-  public dropped(files: NgxFileDropEntry[]) {
-    this.files = files;
-    for (const droppedFile of files) {
-      // Is it a file?
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-          // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
-
-          /**
-          // You could upload it like this:
-          const formData = new FormData()
-          formData.append('logo', file, relativePath)
-
-          // Headers
-          const headers = new HttpHeaders({
-            'security-token': 'mytoken'
-          })
-
-          this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-          .subscribe(data => {
-            // Sanitized logo returned from backend
-          })
-          **/
-        });
-      } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
-      }
+  public dropped(files: File): void {
+    if (files[0].relativePath.slice(-5) === '.json') {
+      this.file = files[0];
     }
   }
 
-  public fileOver(event) {
-    console.log(event);
+  public uploadJson(): void {
+    if (this.structureService.selectedFolder){
+      this.structureService.uploadJsonStructure(this.file).subscribe(() => {
+        this.structureService.selectedFolder.next(null);
+        this.selectedFolder = null;
+      });
+    }
+    
   }
-
-  public fileLeave(event) {
-    console.log(event);
-  }
-  F;
 }

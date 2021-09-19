@@ -1,12 +1,13 @@
-.panel {
+.button {
     border-radius: 10px;
     border-color: black;
-    border-style: dashed;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-
-    &__title {
-        align-self: center;
-    }
+    border-style: solid
 }
+
+.upload-button {
+    margin-left: 40%; 
+    border-radius: 5px;
+    border-color: black;
+    border-style: solid
+}
+

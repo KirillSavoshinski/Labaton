@@ -1,9 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace Labaton.Interfaces
 {
     public interface IApplyJsonService
     {
-        void ApplyJson(string selectedFolderPath, JObject structure);
+        void ApplyJson(string selectedFolder, IFormFile file);
     }
 }

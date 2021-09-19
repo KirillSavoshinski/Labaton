@@ -1,7 +1,7 @@
-﻿using System.Text.Json;
+﻿using System;
 using Labaton.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 
 namespace Labaton.Controllers
 {
@@ -21,14 +21,29 @@ namespace Labaton.Controllers
         [HttpGet]
         public ActionResult GetStructure([FromQuery] string path)
         {
-            return Ok(_directoryService.GetDirectoriesStructure(path));
+            try
+            {
+                var structure = _directoryService.GetDirectoriesStructure(path);
+                return Ok(structure);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]
-        public ActionResult CreateStructure([FromQuery] string selectedFolderPath, JObject structure)
+        public ActionResult CreateStructure([FromForm] string selectedFolder, [FromForm] IFormFile file)
         {
-            _applyJsonService.ApplyJson(selectedFolderPath, structure);
-            return Ok();
+            try
+            {
+                _applyJsonService.ApplyJson(selectedFolder, file);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
     }
 }
