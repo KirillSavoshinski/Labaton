@@ -1,9 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  NgxFileDropEntry,
-  FileSystemFileEntry,
-  FileSystemDirectoryEntry,
-} from 'ngx-file-drop';
 import { StructureService } from '../services/structure.service';
 
 @Component({
@@ -12,28 +7,32 @@ import { StructureService } from '../services/structure.service';
   styleUrls: ['./panel.component.scss'],
 })
 export class PanelComponent implements OnInit {
-  public file: File;
+  public file: string;
   public selectedFolder: string = null;
 
   constructor(private structureService: StructureService) {}
 
   ngOnInit(): void {
-    this.structureService.selectedFolder.subscribe(val => this.selectedFolder = val);
+    this.structureService.selectedFolder.subscribe(
+      (val) => (this.selectedFolder = val)
+    );
   }
 
-  public dropped(files: File): void {
-    if (files[0].relativePath.slice(-5) === '.json') {
-      this.file = files[0];
+  onFileChange(event) {
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.file = event.target.files[i];
     }
   }
 
   public uploadJson(): void {
-    if (this.structureService.selectedFolder){
-      this.structureService.uploadJsonStructure(this.file).subscribe(() => {
+    if (this.structureService.selectedFolder) {
+      let fd = new FormData();
+      fd.append('file', this.file);
+      this.selectedFolder = null;
+      this.structureService.uploadJsonStructure(fd).subscribe(() => {
         this.structureService.selectedFolder.next(null);
-        this.selectedFolder = null;
+        window.location.reload();
       });
     }
-    
   }
 }

@@ -1,33 +1,12 @@
-<form class="center">
-  <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)">
-    <ng-template
-      ngx-file-drop-content-tmp
-      let-openFileSelector="openFileSelector"
-    >
-      Drop your json here
-      <button type="button" class="button ml-2" (click)="openFileSelector()">
-        Browse Files
-      </button>
-    </ng-template>
-  </ngx-file-drop>
-  <div class="upload-table mt-1">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>File</th>
-        </tr>
-      </thead>
-      <tbody class="upload-name-style">
-        <tr *ngIf="file">
-          <td>
-            <strong>{{ file.relativePath }}</strong>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <p>Selected folder: {{selectedFolder}}</p>
-  <button [disabled]="(!file || selectedFolder === null)" class="upload-button" (click)="uploadJson()">
+<form class="center form">
+  <input type="file" (change)="onFileChange($event)" />
+  <p>Selected folder: {{ selectedFolder }}</p>
+  <button
+    type="submit"
+    [disabled]="!file || selectedFolder === null"
+    class="form__upload-button"
+    (click)="uploadJson()"
+  >
     Upload
   </button>
 </form>

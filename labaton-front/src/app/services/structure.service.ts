@@ -20,11 +20,8 @@ export class StructureService {
     });
   }
 
-  public uploadJsonStructure(file: File) {
-    let formData = new FormData();
-    formData.append('file', file);
+  public uploadJsonStructure(formData: FormData) {
     formData.append('selectedFolder', this.selectedFolder.value);
-
     return this.http.post(this.baseUrl + 'api/directories', formData);
   }
 }

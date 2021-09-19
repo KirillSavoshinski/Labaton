@@ -1,13 +1,13 @@
-.button {
-    border-radius: 10px;
-    border-color: black;
-    border-style: solid
-}
-
-.upload-button {
-    margin-left: 40%; 
+.form {
+  border-radius: 10px;
+  border-color: black;
+  border-style: solid;
+  padding: 10px; 
+  
+  &__upload-button {
+    margin-left: 40%;
     border-radius: 5px;
     border-color: black;
-    border-style: solid
+    border-style: solid;
+  }
 }
-

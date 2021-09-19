@@ -16,7 +16,7 @@ export class TreeComponent implements OnInit {
   }
 
   public click(path: string): void {
-    this.structureService.selectedFolder.next(path);
+    this.structureService.selectedFolder.next(path.replace('\\','/'));
     this.structureService.getStructure(path).subscribe(response => {
       this.treeItem.children.find(el => el.path === path).children = response.children;
     });
