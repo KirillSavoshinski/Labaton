@@ -40,7 +40,7 @@ namespace Labaton.Controllers
                 _applyJsonService.ApplyJson(selectedFolder, file);
                 return Ok();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return BadRequest();
             }

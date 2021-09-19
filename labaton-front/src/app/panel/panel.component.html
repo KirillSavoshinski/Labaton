@@ -1,6 +1,6 @@
 <form class="center form">
   <input type="file" (change)="onFileChange($event)" />
-  <p>Selected folder: {{ selectedFolder }}</p>
+  <p><b>Selected folder:</b> {{ selectedFolder }}</p>
   <button
     type="submit"
     [disabled]="!file || selectedFolder === null"

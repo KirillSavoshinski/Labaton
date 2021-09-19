@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Labaton.Models;
+﻿using Labaton.Models;
 
 namespace Labaton.Interfaces
 {
