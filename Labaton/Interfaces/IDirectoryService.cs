@@ -2,7 +2,7 @@
 
 namespace Labaton.Interfaces
 {
-    public interface IDirectory
+    public interface IDirectoryService
     {
         FolderItem GetDirectoriesStructure(string path);
     }

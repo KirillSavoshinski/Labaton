@@ -9,12 +9,12 @@ namespace Labaton.Controllers
     [Route("api/directories")]
     public class DirectoriesController : ControllerBase
     {
-        private readonly IDirectory _directoryService;
+        private readonly IDirectoryService _directoryServiceService;
         private readonly IApplyJsonService _applyJsonService;
 
-        public DirectoriesController(IApplyJsonService applyJsonService, IDirectory directoryService)
+        public DirectoriesController(IApplyJsonService applyJsonService, IDirectoryService directoryServiceService)
         {
-            _directoryService = directoryService;
+            _directoryServiceService = directoryServiceService;
             _applyJsonService = applyJsonService;
         }
 
@@ -23,7 +23,7 @@ namespace Labaton.Controllers
         {
             try
             {
-                var structure = _directoryService.GetDirectoriesStructure(path);
+                var structure = _directoryServiceService.GetDirectoriesStructure(path);
                 return Ok(structure);
             }
             catch (Exception)

@@ -19,9 +19,7 @@ export class PanelComponent implements OnInit {
   }
 
   onFileChange(event) {
-    for (var i = 0; i < event.target.files.length; i++) {
-      this.file = event.target.files[i];
-    }
+      this.file = event.target.files[0];
   }
 
   public uploadJson(): void {

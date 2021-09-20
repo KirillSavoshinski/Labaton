@@ -3,9 +3,9 @@
     *ngFor="let child of treeItem.children"
     heading="{{ child.path }}"
     (click)="click(child.path)"
+    class="ml-2"
   >
-    <div
-      class="w-100"
+    <div 
       *ngIf="child.children"
       (click)="$event.stopPropagation();"
     >

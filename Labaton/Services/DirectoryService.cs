@@ -6,7 +6,7 @@ using Labaton.Models;
 
 namespace Labaton.Services
 {
-    public class DirectoryService : IDirectory
+    public class DirectoryServiceService : IDirectoryService
     {
         public FolderItem GetDirectoriesStructure(string path)
         {

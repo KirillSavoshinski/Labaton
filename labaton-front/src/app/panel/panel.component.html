@@ -1,12 +1,11 @@
-<form class="center form">
-  <input type="file" (change)="onFileChange($event)" />
+<form class="form">
+  <h3 class="form__title">Working panel</h3>
+  <hr>
   <p><b>Selected folder:</b> {{ selectedFolder }}</p>
-  <button
-    type="submit"
-    [disabled]="!file || selectedFolder === null"
-    class="form__upload-button"
-    (click)="uploadJson()"
-  >
+  <input type="file" (change)="onFileChange($event)"/>
+  <hr>
+  <button type="submit" [disabled]="!file || selectedFolder === null" class="form__upload-button"
+    (click)="uploadJson()">
     Upload
   </button>
 </form>

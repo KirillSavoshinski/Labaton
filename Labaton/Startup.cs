@@ -28,7 +28,7 @@ namespace Labaton
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IDirectory, DirectoryService>();
+            services.AddScoped<IDirectoryService, DirectoryServiceService>();
             services.AddScoped<IApplyJsonService, ApplyJsonService>();
             services.AddCors();
             services.AddControllers();

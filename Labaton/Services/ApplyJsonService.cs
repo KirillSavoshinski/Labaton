@@ -21,10 +21,10 @@ namespace Labaton.Services
             }
             var structure = JsonConvert.DeserializeObject<JObject>(result.ToString());
            
-            WalkJsonStructure(selectedFolder, structure);
+            ApplyJsonStructure(selectedFolder, structure);
         }
 
-        private void WalkJsonStructure(string currentFolder, JToken children)
+        private void ApplyJsonStructure(string currentFolder, JToken children)
         {
             var folders = children.Children()
                 .Select(_ => currentFolder).ToList();
@@ -42,7 +42,7 @@ namespace Labaton.Services
                     }
                 }
 
-                WalkJsonStructure(currentFolder, child);
+                ApplyJsonStructure(currentFolder, child);
                 i++;
             }
         }

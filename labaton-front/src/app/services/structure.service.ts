@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { TreeItem } from '../models/tree-item';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-import { NgxFileDropEntry } from 'ngx-file-drop';
+import { BehaviorSubject, Observable } from 'rxjs'; 
 
 @Injectable({
   providedIn: 'root',
