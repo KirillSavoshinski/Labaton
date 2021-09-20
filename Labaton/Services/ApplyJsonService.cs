@@ -11,7 +11,7 @@ namespace Labaton.Services
 {
     public class ApplyJsonService : IApplyJsonService
     {
-        public void ApplyJson(string selectedFolder, IFormFile file)
+        public void ApplyJson(string selectedFolder, IFormFile file, bool isOverwrite)
         {
             var result = new StringBuilder();
             using (var reader = new StreamReader(file.OpenReadStream()))
@@ -21,10 +21,10 @@ namespace Labaton.Services
             }
             var structure = JsonConvert.DeserializeObject<JObject>(result.ToString());
            
-            ApplyJsonStructure(selectedFolder, structure);
+            ApplyJsonStructure(selectedFolder, structure, isOverwrite);
         }
 
-        private void ApplyJsonStructure(string currentFolder, JToken children)
+        private void ApplyJsonStructure(string currentFolder, JToken children, bool isOverwrite)
         {
             var folders = children.Children()
                 .Select(_ => currentFolder).ToList();
@@ -34,15 +34,20 @@ namespace Labaton.Services
             {
                 if (child is JProperty property)
                 {
-                    currentFolder = folders[i] + property.Name + "/";
-                    Console.WriteLine(currentFolder);
-                    if (!Directory.Exists(currentFolder))
+                    currentFolder = folders[i] + property.Name + "/"; 
+                    
+                    if (Directory.Exists(currentFolder) && isOverwrite)
                     {
+                        Directory.Delete(currentFolder, true);
+                        Directory.CreateDirectory(currentFolder);
+                    }
+                    else
+                    { 
                         Directory.CreateDirectory(currentFolder);
                     }
                 }
 
-                ApplyJsonStructure(currentFolder, child);
+                ApplyJsonStructure(currentFolder, child, isOverwrite);
                 i++;
             }
         }

@@ -7,8 +7,8 @@ import { AppComponent } from './app.component';
 import { TreeComponent } from './tree/tree.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
-import { PanelComponent } from './panel/panel.component';
-import { NgxFileDropModule } from 'ngx-file-drop';
+import { PanelComponent } from './panel/panel.component';  
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,8 +21,8 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    AccordionModule.forRoot(),
-    NgxFileDropModule
+    AccordionModule.forRoot(), 
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

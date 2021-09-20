@@ -4,6 +4,6 @@ namespace Labaton.Interfaces
 {
     public interface IApplyJsonService
     {
-        void ApplyJson(string selectedFolder, IFormFile file);
+        void ApplyJson(string selectedFolder, IFormFile file, bool isOverwrite);
     }
 }

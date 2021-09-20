@@ -2,7 +2,13 @@
   <h3 class="form__title">Working panel</h3>
   <hr>
   <p><b>Selected folder:</b> {{ selectedFolder }}</p>
-  <input type="file" (change)="onFileChange($event)"/>
+  <input type="file" (change)="onFileChange($event)" />
+  <div class="form__toggle">
+    <p class="mt-1">Do you want to overwrite existing folders?</p>
+    <span class="mt-1 ml-1">Yes<input class="ml-1" type="checkbox" [(ngModel)]="isOverwrite"
+        [ngModelOptions]="{standalone: true}"></span>
+  </div>
+
   <hr>
   <button type="submit" [disabled]="!file || selectedFolder === null" class="form__upload-button"
     (click)="uploadJson()">

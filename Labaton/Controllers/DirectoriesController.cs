@@ -33,11 +33,11 @@ namespace Labaton.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateStructure([FromForm] string selectedFolder, [FromForm] IFormFile file)
+        public ActionResult CreateStructure([FromForm] string selectedFolder, [FromForm]bool isOverwrite, [FromForm] IFormFile file)
         {
             try
             {
-                _applyJsonService.ApplyJson(selectedFolder, file);
+                _applyJsonService.ApplyJson(selectedFolder, file, isOverwrite);
                 return Ok();
             }
             catch (Exception)

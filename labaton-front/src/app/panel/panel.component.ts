@@ -9,6 +9,7 @@ import { StructureService } from '../services/structure.service';
 export class PanelComponent implements OnInit {
   public file: string;
   public selectedFolder: string = null;
+  public isOverwrite = false;
 
   constructor(private structureService: StructureService) {}
 
@@ -26,6 +27,7 @@ export class PanelComponent implements OnInit {
     if (this.structureService.selectedFolder) {
       let fd = new FormData();
       fd.append('file', this.file);
+      fd.append('isOverwrite', this.isOverwrite.toString());
       this.selectedFolder = null;
       this.structureService.uploadJsonStructure(fd).subscribe(() => {
         this.structureService.selectedFolder.next(null);
